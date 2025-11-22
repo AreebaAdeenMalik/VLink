@@ -1,15 +1,13 @@
 import torch
 import cv2
-import numpy as np
 from effdet import create_model
-import os
 from torchvision import transforms
 
 
 # Removed matplotlib to avoid PyCharm backend errors
 
 # 1. Load the Model
-def load_model(model_name='tf_efficientdet_d0', device='cuda'):
+def load_model(model_name='tf_efficientdet_d3', device='cuda'):
     """
     Loads a pretrained EfficientDet model.
     """
@@ -76,7 +74,7 @@ def detect_objects(model, image_path, confidence_threshold=0.5, device='cuda'):
     # 4. Filter & Display Results
     # COCO Classes (Simple list for demo purposes)
     # Note: Full list is 90 classes. This is a truncated example.
-    COCO_CLASSES = [
+    coco_classes = [
         'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus', 'train', 'truck', 'boat', 'traffic light',
         'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
         'elephant', 'bear', 'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie', 'suitcase', 'frisbee',
@@ -115,15 +113,14 @@ def detect_objects(model, image_path, confidence_threshold=0.5, device='cuda'):
 
             # Label
             label_idx = int(class_id) - 1  # effdet classes are 1-indexed often
-            label_text = f"{COCO_CLASSES[label_idx] if label_idx < len(COCO_CLASSES) else 'Unknown'}: {score:.2f}"
+            label_text = f"{coco_classes[label_idx] if label_idx < len(coco_classes) else 'Unknown'}: {score: .2f}"
 
             cv2.putText(original_image, label_text, (int(x_min), int(y_min) - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
-            print(f"Found {label_text} at [{x_min:.0f}, {y_min:.0f}, {x_max:.0f}, {y_max:.0f}]")
+            print(f"Found {label_text} at [{x_min: .0f}, {y_min: .0f}, {x_max: .0f}, {y_max: .0f}]")
 
     # Show final image using OpenCV (Standard for Computer Vision)
-    # This avoids the 'FigureCanvasInterAgg' error in PyCharm
     cv2.imshow("EfficientDet Predictions", original_image)
     print("\nPress any key to close the image window...")
     cv2.waitKey(0)  # Wait for a key press
