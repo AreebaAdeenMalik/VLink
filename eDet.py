@@ -127,7 +127,7 @@ def detect_objects(model, image_path, confidence_threshold=0.5, device='cuda'):
     cv2.destroyAllWindows()
 
     # Save result
-    cv2.imwrite("result.jpg", original_image)
+    cv2.imwrite("results/result.jpg", original_image)
     print("\nResult saved to result.jpg")
 
 
