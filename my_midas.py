@@ -79,7 +79,6 @@ def run_depth_estimation(image_path):
 
 if __name__ == "__main__":
     # Replace with your actual image path
-    image_path = "results/result_yolo12.jpg"
     image_path = "resources/persons.jpg"
 
     import os
