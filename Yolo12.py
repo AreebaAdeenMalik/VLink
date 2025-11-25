@@ -1,6 +1,8 @@
 from ultralytics import YOLO
 import cv2
 import torch
+import os
+import numpy as np
 
 
 def run_yolo_inference(image_path):
@@ -13,8 +15,8 @@ def run_yolo_inference(image_path):
     # 'yolov12n.pt' = Nano (Fastest)
     # 'yolov12s.pt' = Small (Balanced)
     # 'yolov12m.pt' = Medium
-    print("Loading YOLO12 model...")
-    model = YOLO("yolo12s.pt")
+    print("Loading YOLOv12 model...")
+    model = YOLO("yolo12l.pt")
 
     # 3. Run Inference
     results = model(image_path, device=device)
@@ -23,7 +25,7 @@ def run_yolo_inference(image_path):
     annotated_frame = results[0].plot()
 
     # 5. Display
-    cv2.imshow("YOLO12 Detections", annotated_frame)
+    cv2.imshow("YOLOv12 Detections", annotated_frame)
 
     print("\nPress any key to close the window...")
     cv2.waitKey(0)
@@ -37,9 +39,6 @@ def run_yolo_inference(image_path):
 if __name__ == "__main__":
     # Replace with your actual image path
     image_path = "resources/persons.jpg"
-
-    import os
-    import numpy as np
 
     if not os.path.exists(image_path):
         print(f"Creating dummy {image_path}...")
