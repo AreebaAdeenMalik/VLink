@@ -1,0 +1,5 @@
+torch~=2.9.1
+opencv-python~=4.12.0.88
+effdet~=0.4.1
+torchvision~=0.24.1
+numpy~=2.2.6
