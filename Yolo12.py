@@ -2,7 +2,6 @@ from ultralytics import YOLO
 import cv2
 import torch
 
-
 def run_yolo_inference(image_path):
     # 1. Check device
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -14,7 +13,7 @@ def run_yolo_inference(image_path):
     # 'yolov12s.pt' = Small (Balanced)
     # 'yolov12m.pt' = Medium
     print("Loading YOLO12 model...")
-    model = YOLO("yolo12s.pt")
+    model = YOLO("yolo12l.pt")
 
     # 3. Run Inference
     results = model(image_path, device=device)

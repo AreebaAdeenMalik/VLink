@@ -2,6 +2,7 @@ import os
 import urllib.request
 import tarfile
 
+
 def create_config_yaml():
     """Generates a standard config file for a 640x480 webcam."""
     content = """%YAML:1.0
