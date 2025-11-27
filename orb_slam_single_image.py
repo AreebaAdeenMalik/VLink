@@ -1,7 +1,6 @@
 import cv2
-import numpy as np
-import yaml
 import os
+import numpy as np
 
 
 def load_camera_params(yaml_path):
@@ -14,10 +13,14 @@ def load_camera_params(yaml_path):
         try:
             # Simple parsing
             for line in f:
-                if "Camera.fx:" in line: fx = float(line.split(":")[1])
-                if "Camera.fy:" in line: fy = float(line.split(":")[1])
-                if "Camera.cx:" in line: cx = float(line.split(":")[1])
-                if "Camera.cy:" in line: cy = float(line.split(":")[1])
+                if "Camera.fx:" in line:
+                    fx = float(line.split(":")[1])
+                if "Camera.fy:" in line:
+                    fy = float(line.split(":")[1])
+                if "Camera.cx:" in line:
+                    cx = float(line.split(":")[1])
+                if "Camera.cy:" in line:
+                    cy = float(line.split(":")[1])
             return fx, fy, cx, cy
         except:
             return 500.0, 500.0, 320.0, 240.0
@@ -104,7 +107,16 @@ class VisualOdometryORB:
         pts_curr = np.float32([kp[m.trainIdx].pt for m in good_matches])
 
         # 5. Estimate Motion (Essential Matrix)
-        E, mask = cv2.findEssentialMat(pts_curr, pts_prev, self.focal_len, self.pp, cv2.RANSAC, 0.999, 1.0, None)
+        E, mask = cv2.findEssentialMat(
+            pts_curr,
+            pts_prev,
+            self.focal_len,
+            self.pp,
+            cv2.RANSAC,
+            0.999,
+            1.0,
+            None
+        )
 
         # Recover Rotation (R) and Translation (t)
         if E is not None:
@@ -179,10 +191,10 @@ def run_single_image(image_path):
 
         status_text = f"ORB Features: {len(current_points)}"
         cv2.putText(display_frame, status_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        print(f"✅ Success! Detected {len(current_points)} features.")
+        print(f"Success! Detected {len(current_points)} features.")
         print("Visual Odometry initialized (Ready for next frame).")
     else:
-        print("⚠️ No features detected.")
+        print("No features detected.")
 
     # Show result
     cv2.imshow("ORB Features", display_frame)
@@ -196,15 +208,5 @@ def run_single_image(image_path):
 if __name__ == "__main__":
     # Replace with your actual image path
     image_path = "resources/persons.jpg"
-
-    import os
-
-    if not os.path.exists(image_path):
-        print(f"Creating dummy {image_path}...")
-        import numpy as np
-
-        dummy = np.zeros((640, 640, 3), dtype=np.uint8)
-        cv2.circle(dummy, (320, 240), 50, (255, 255, 255), -1)
-        cv2.imwrite(image_path, dummy)
 
     run_single_image(image_path)

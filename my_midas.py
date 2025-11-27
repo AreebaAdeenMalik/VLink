@@ -1,5 +1,6 @@
 import cv2
 import torch
+import os
 import numpy as np
 
 
@@ -65,7 +66,7 @@ def run_depth_estimation(image_path):
     depth_map_vis = cv2.applyColorMap(depth_map_vis, cv2.COLORMAP_MAGMA)
 
     # Show results
-    cv2.imshow("Original Image", original_image)
+    #cv2.imshow("Original Image", original_image)
     cv2.imshow("MiDaS Depth Map", depth_map_vis)
 
     print("\nPress any key to close the windows...")
@@ -80,8 +81,6 @@ def run_depth_estimation(image_path):
 if __name__ == "__main__":
     # Replace with your actual image path
     image_path = "resources/persons.jpg"
-
-    import os
 
     if not os.path.exists(image_path):
         print(f"Creating dummy {image_path}...")
